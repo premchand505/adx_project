@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ADX Results</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h1>ADX Results</h1>
+  <div id="chart" style="width:100%;height:500px;"></div>
+  <p>
+    <a href="{% url 'indicator:download' %}">Download Output CSV</a>
+  </p>
+
+  <!-- Put raw JSON here. Use |safe because view uses json.dumps(plot_data). -->
+  <script id="plot-data" type="application/json">
+    {{ plot_json|safe }}
+  </script>
+
+  <script>
+    // Read JSON safely from the DOM and parse it
+    const raw = document.getElementById('plot-data').textContent.trim();
+    let plotData = {};
+    try {
+      plotData = JSON.parse(raw);
+    } catch (err) {
+      console.error('Failed to parse plot data JSON:', err, raw);
+    }
+
+    const x = plotData.x || [];
+    const adx = {
+      x: x,
+      y: (plotData.ADX || []).map(v => (v === "" ? null : v)),
+      name: 'ADX',
+      mode: 'lines'
+    };
+    const pdi = {
+      x: x,
+      y: (plotData["+DI14"] || []).map(v => (v === "" ? null : v)),
+      name: '+DI'
+    };
+    const mdi = {
+      x: x,
+      y: (plotData["-DI14"] || []).map(v => (v === "" ? null : v)),
+      name: '-DI'
+    };
+
+    const layout = { title: 'ADX / +DI / -DI' };
+    Plotly.newPlot('chart', [adx, pdi, mdi], layout);
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- indicator/templates/indicator/index.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ADX Upload</title>
+</head>
+<body>
+  <h1>Upload OHLC CSV</h1>
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+  <form action="{% url 'indicator:process' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" accept=".csv,.xls,.xlsx" required>
+    <button type="submit">Upload & Compute ADX</button>
+  </form>
+</body>
+</html>
