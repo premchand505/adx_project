@@ -273,21 +273,11 @@ xlrd==1.2.0
 
 ---
 
-# 🧠 Notes for Evaluators
-
-* ADX calculations match Excel exactly (verified programmatically).
-* No rounding in intermediate steps — same precision as Excel formulas.
-* UI intentionally simple and professional.
-* Code is structured and testable.
-* Chart is designed for clarity over aesthetics.
-
 ---
 
-# 📜 License
 
-This project is provided as part of a technical assignment.
 
----
+
 
 # 🎯 Final Statement
 
